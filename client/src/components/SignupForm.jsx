@@ -1,12 +1,22 @@
 import { useState } from "react";
 
 export default function SignupForm() {
-  const [formData, setFormData] = useState('');
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+//no 
 
   const handleChange = (evt) => {
+    const fieldName = evt.target.name;
     const value = evt.target.value;
-    setFormData(value);
-  }
+    setFormData((prev) => {
+      prev[fieldName] = value;
+      return { ...prev };
+    });
+  };
 
   return (
     <form className="font-mono text-[#fffceb] flex flex-col gap-6" action="/">
@@ -18,7 +28,8 @@ export default function SignupForm() {
           className="w-full h-9 border-2 border-[#90CF8E] px-2 rounded-md outline-none text-[#a67b5b]"
           type="text"
           id="username"
-          value={formData}
+          name="username"
+          value={formData.username}
           onChange={handleChange}
         />
       </div>
@@ -31,6 +42,9 @@ export default function SignupForm() {
           className="w-full h-9 border-2 border-[#90CF8E] px-2 rounded-md outline-none text-[#a67b5b]"
           type="email"
           id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
         />
       </div>
 
@@ -42,6 +56,9 @@ export default function SignupForm() {
           className="w-full h-9 border-2 border-[#90CF8E] px-2 rounded-md outline-none text-[#a67b5b]"
           type="password"
           id="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
         />
       </div>
 
