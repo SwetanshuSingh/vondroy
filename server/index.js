@@ -1,22 +1,17 @@
 const express = require("express");
-const User = require('./db/index');
+const cors = require("cors");
+const signup = require("./routes/signup");
+const signin = require("./routes/signin");
+
+const PORT = 3000;
 
 const app = express();
+
 app.use(express.json());
+app.use(cors());
+app.use("/signup", signup);
+app.use("/signin", signin);
 
-app.post('/signup', async (req, res) => {
-    const username = req.body.username;
-    const email = req.body.email;
-    const password = req.body.password;
-
-    await User.create({
-        username : username,
-        email : email,
-        password : password
-    })
-    res.json({message : 'User created'})
-})
-
-app.listen(3000, () => {
-    console.log('Listening on PORT 3000');
-})
+app.listen(PORT, () => {
+  console.log("Listening on PORT 3000");
+});
