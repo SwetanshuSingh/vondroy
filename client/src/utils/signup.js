@@ -1,4 +1,4 @@
-async function addUser(evt, formData) {
+async function signup(evt, formData) {
   evt.preventDefault();
   const response = await fetch("http://localhost:3000/signup", {
     method: "POST",
@@ -15,4 +15,4 @@ async function addUser(evt, formData) {
   console.log(result);
 }
 
-export { addUser };
+export { signup };
