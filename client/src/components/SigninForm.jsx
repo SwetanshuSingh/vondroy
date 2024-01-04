@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { signup } from "../utils/signup";
 
-export default function SignupForm() {
+export default function SigninForm() {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -68,13 +67,8 @@ export default function SignupForm() {
           />
         </div>
 
-        <button
-          onClick={(evt) => {
-            signup(evt, formData);
-          }}
-          className="w-full h-10 bg-[#fffceb] rounded-lg uppercase text-[#a67b5b] font-semibold"
-        >
-          Sign Up
+        <button className="w-full h-10 bg-[#fffceb] rounded-lg uppercase text-[#a67b5b] font-semibold">
+          Sign in
         </button>
       </form>
     </>

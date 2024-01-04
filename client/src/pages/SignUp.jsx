@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SignupForm from "../components/SignUpForm";
 
 export default function Signup(){
@@ -11,6 +12,7 @@ export default function Signup(){
             <h1 className="text-3xl  text-[#fffceb] font-semibold text-center">Sign Up to Continue</h1>
             <SignupForm />
             </div>
+            <h2 className="text-lg text-[#fffceb] font-semibold">Already an existing user? <Link to="/signin" replace className=" underline">Sign In</Link></h2>
         </main>
     )
 }
