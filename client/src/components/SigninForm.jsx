@@ -1,6 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
+import { login } from "../utils/login";
+import { useNavigate } from "react-router-dom";
 
 export default function SigninForm() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -67,7 +72,12 @@ export default function SigninForm() {
           />
         </div>
 
-        <button className="w-full h-10 bg-[#fffceb] rounded-lg uppercase text-[#a67b5b] font-semibold">
+        <button
+          onClick={(evt) => {
+            login(evt, formData, navigate);
+          }}
+          className="w-full h-10 bg-[#fffceb] rounded-lg uppercase text-[#a67b5b] font-semibold"
+        >
           Sign in
         </button>
       </form>
