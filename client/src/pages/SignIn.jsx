@@ -17,7 +17,7 @@ export default function SignIn() {
       </div>
       <h2 className="text-xl text-[#fffceb] font-semibold">
         Not an Existing User?{" "}
-        <Link to="/signup" replace className=" underline">
+        <Link to="/" replace className=" underline">
           Sign Up
         </Link>
       </h2>

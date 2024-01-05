@@ -6,7 +6,7 @@ import Chatpage from "./pages/ChatPage";
 export default function HomePage(){
   return (
     <Routes>
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/" element={<Signup />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/chat" element={<Chatpage />} />
     </Routes>
