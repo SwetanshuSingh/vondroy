@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 
 export default function Chatpage() {
   const [users, setUsers] = useState([]);
+  // const [token, setToken] = useState([]);
 
   async function getUsers() {
-    const response = await fetch("http://localhost:3000/users");
+    const authToken = await JSON.parse(localStorage.getItem('authorization'))
+    const response = await fetch("http://localhost:3000/users", {
+      headers : {
+        token : authToken
+      }
+    });
     const result = await response.json();
     const usersData = result.usernames;
     setUsers(usersData);

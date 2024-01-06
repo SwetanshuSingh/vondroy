@@ -1,5 +1,23 @@
-async function login(evt, formData, navigate) {
+import { userSchema } from "./userSchema";
+
+async function login(
+  evt,
+  formData,
+  setIsInputUnvalid,
+  setAuthorizationToken,
+) {
   evt.preventDefault();
+  const validatedInput = userSchema.safeParse({
+    username: formData.username,
+    email: formData.email,
+    password: formData.password,
+  });
+
+  if (!validatedInput.success) {
+    return setIsInputUnvalid(true);
+  }
+  setIsInputUnvalid(false);
+
   const response = await fetch("http://localhost:3000/signin", {
     method: "GET",
     headers: {
@@ -8,15 +26,13 @@ async function login(evt, formData, navigate) {
       password: formData.password,
     },
   });
-  const data = await response.json();
-  try{
-    if(data.message === 'User found'){
-        return navigate("../chat")
+  const result = await response.json();
+  try {
+    if (result.authorization) {
+      setAuthorizationToken(result.authorization);
     }
-    console.log('cannot change the state');
-  }
-  catch(e){
-    console.log(e)
+  } catch (e) {
+    console.log(e);
   }
 }
 

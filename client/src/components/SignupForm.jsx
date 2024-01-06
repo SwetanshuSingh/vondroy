@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { signup } from "../utils/signup";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupForm() {
   const [formData, setFormData] = useState({
@@ -7,6 +8,9 @@ export default function SignupForm() {
     email: "",
     password: "",
   });
+
+  const navigation = useNavigate();
+  const [isInputUnvalid, setIsInputUnvalid] = useState(false);
 
   const handleChange = (evt) => {
     const fieldName = evt.target.name;
@@ -19,7 +23,7 @@ export default function SignupForm() {
 
   return (
     <>
-      <form className="font-mono text-[#fffceb] flex flex-col gap-6" action="">
+      <form className="font-mono text-[#2b2d42] flex flex-col gap-6" action="">
         <div className="field flex flex-col gap-1">
           <label
             htmlFor="username"
@@ -28,7 +32,7 @@ export default function SignupForm() {
             Username
           </label>
           <input
-            className="w-full h-9 border-2 border-[#90CF8E] px-2 rounded-md outline-none text-[#a67b5b]"
+            className="w-full h-9 border-2 border-[#2b2d42]  px-2 rounded-md outline-none text-[#a67b5b]"
             type="text"
             id="username"
             name="username"
@@ -42,7 +46,7 @@ export default function SignupForm() {
             Email
           </label>
           <input
-            className="w-full h-9 border-2 border-[#90CF8E] px-2 rounded-md outline-none text-[#a67b5b]"
+            className="w-full h-9 border-2 border-[#2b2d42]  px-2 rounded-md outline-none text-[#a67b5b]"
             type="email"
             id="email"
             name="email"
@@ -59,7 +63,7 @@ export default function SignupForm() {
             Password
           </label>
           <input
-            className="w-full h-9 border-2 border-[#90CF8E] px-2 rounded-md outline-none text-[#a67b5b]"
+            className="w-full h-9 border-2 border-[#2b2d42]  px-2 rounded-md outline-none text-[#a67b5b]"
             type="password"
             id="password"
             name="password"
@@ -70,12 +74,17 @@ export default function SignupForm() {
 
         <button
           onClick={(evt) => {
-            signup(evt, formData);
+            signup(evt, formData, setIsInputUnvalid, navigation);
           }}
-          className="w-full h-10 bg-[#fffceb] rounded-lg uppercase text-[#a67b5b] font-semibold"
+          className="w-full h-10 bg-[#2b2d42] rounded-lg uppercase text-[#f4f3ee] font-semibold"
         >
           Sign Up
         </button>
+        {isInputUnvalid ? (
+          <h1 className="text-center text-xl font-semibold text-[#ef233c]">
+            Invalid Input
+          </h1>
+        ) : null}
       </form>
     </>
   );
