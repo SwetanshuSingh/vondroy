@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
     password: password,
     email: email,
   });
-  res.json({ message: "User created" });
+  res.json({ message: "success" });
 });
 
 module.exports = router;

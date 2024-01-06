@@ -1,16 +1,25 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { login } from "../utils/login";
 import { useNavigate } from "react-router-dom";
 
 export default function SigninForm() {
-  const navigate = useNavigate();
-
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
+  const [isInputUnvalid, setIsInputUnvalid] = useState(false);
+  const [authorizationToken, setAuthorizationToken] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem('authorization', JSON.stringify(authorizationToken))
+    if(authorizationToken){
+      navigate("/chat");
+    }
+  }, [authorizationToken])
 
   const handleChange = (evt) => {
     const fieldName = evt.target.name;
@@ -23,7 +32,7 @@ export default function SigninForm() {
 
   return (
     <>
-      <form className="font-mono text-[#fffceb] flex flex-col gap-6" action="">
+      <form className="font-mono text-[#2b2d42] flex flex-col gap-6" action="">
         <div className="field flex flex-col gap-1">
           <label
             htmlFor="username"
@@ -32,7 +41,7 @@ export default function SigninForm() {
             Username
           </label>
           <input
-            className="w-full h-9 border-2 border-[#90CF8E] px-2 rounded-md outline-none text-[#a67b5b]"
+            className="w-full h-9 border-2 border-[#2b2d42] px-2 rounded-md outline-none text-[#a67b5b]"
             type="text"
             id="username"
             name="username"
@@ -46,7 +55,7 @@ export default function SigninForm() {
             Email
           </label>
           <input
-            className="w-full h-9 border-2 border-[#90CF8E] px-2 rounded-md outline-none text-[#a67b5b]"
+            className="w-full h-9 border-2 border-[#2b2d42] px-2 rounded-md outline-none text-[#a67b5b]"
             type="email"
             id="email"
             name="email"
@@ -63,7 +72,7 @@ export default function SigninForm() {
             Password
           </label>
           <input
-            className="w-full h-9 border-2 border-[#90CF8E] px-2 rounded-md outline-none text-[#a67b5b]"
+            className="w-full h-9 border-2 border-[#2b2d42] px-2 rounded-md outline-none text-[#a67b5b]"
             type="password"
             id="password"
             name="password"
@@ -74,12 +83,17 @@ export default function SigninForm() {
 
         <button
           onClick={(evt) => {
-            login(evt, formData, navigate);
+            login(evt, formData, setIsInputUnvalid, setAuthorizationToken);
           }}
-          className="w-full h-10 bg-[#fffceb] rounded-lg uppercase text-[#a67b5b] font-semibold"
+          className="w-full h-10 bg-[#2b2d42] text-[#f4f3ee] rounded-lg uppercase font-semibold"
         >
           Sign in
         </button>
+        {isInputUnvalid ? (
+          <h1 className="text-center text-xl font-semibold text-[#ef233c]">
+            Invalid Credentials
+          </h1>
+        ) : null}
       </form>
     </>
   );

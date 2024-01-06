@@ -9,7 +9,6 @@ function validateToken(req, res, next){
     }
     try{
         const isVerified = jwt.verify(token, jwtPassword);
-        console.log(isVerified);
         if(isVerified){
             next();
         }

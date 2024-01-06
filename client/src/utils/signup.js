@@ -1,5 +1,17 @@
-async function signup(evt, formData) {
+import { userSchema } from "./userSchema";
+
+async function signup(evt, formData, setIsInputUnvalid, navigation) {
   evt.preventDefault();
+  const validatedInput = userSchema.safeParse({
+    username: formData.username,
+    email: formData.email,
+    password: formData.password,
+  });
+
+  if(!validatedInput.success){
+    return setIsInputUnvalid(true);
+  }
+  setIsInputUnvalid(false);
   const response = await fetch("http://localhost:3000/signup", {
     method: "POST",
     headers: {
@@ -12,7 +24,9 @@ async function signup(evt, formData) {
     }),
   });
   const result = await response.json();
-  console.log(result);
+  if(result.message === "success"){
+    navigation("/signin")
+  }
 }
 
 export { signup };
