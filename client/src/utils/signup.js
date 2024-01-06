@@ -12,7 +12,7 @@ async function signup(evt, formData, setIsInputUnvalid, navigation) {
     return setIsInputUnvalid(true);
   }
   setIsInputUnvalid(false);
-  const response = await fetch("http://localhost:3000/signup", {
+  const response = await fetch(`${import.meta.env.VITE_PROD_BACKEND_URL}/signup`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

@@ -6,7 +6,7 @@ export default function Chatpage() {
 
   async function getUsers() {
     const authToken = await JSON.parse(localStorage.getItem('authorization'))
-    const response = await fetch("http://localhost:3000/users", {
+    const response = await fetch(`${import.meta.env.VITE_PROD_BACKEND_URL}/users`, {
       headers : {
         token : authToken
       }
