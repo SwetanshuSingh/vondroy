@@ -4,7 +4,7 @@ const signup = require("./routes/signup");
 const signin = require("./routes/signin");
 const users = require("./routes/users");
 
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 const app = express();
 
@@ -15,5 +15,5 @@ app.use("/signin", signin);
 app.use("/users", users);
 
 app.listen(PORT, () => {
-  console.log("Listening on PORT 3000");
+  console.log(`Listening on PORT ${PORT}`);
 });
