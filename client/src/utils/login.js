@@ -18,7 +18,7 @@ async function login(
   }
   setIsInputUnvalid(false);
 
-  const response = await fetch("http://localhost:3000/signin", {
+  const response = await fetch(`${import.meta.env.VITE_PROD_BACKEND_URL}/signin`, {
     method: "GET",
     headers: {
       "content-type": "application-json",
