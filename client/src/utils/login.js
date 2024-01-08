@@ -5,6 +5,7 @@ async function login(
   formData,
   setIsInputUnvalid,
   setAuthorizationToken,
+  setIsLoading
 ) {
   evt.preventDefault();
   const validatedInput = userSchema.safeParse({
@@ -17,15 +18,19 @@ async function login(
     return setIsInputUnvalid(true);
   }
   setIsInputUnvalid(false);
+  setIsLoading(true);
 
-  const response = await fetch(`${import.meta.env.VITE_PROD_BACKEND_URL}/signin`, {
-    method: "GET",
-    headers: {
-      "content-type": "application-json",
-      username: formData.username,
-      password: formData.password,
-    },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_DEV_PROD_URL}/signin`,
+    {
+      method: "GET",
+      headers: {
+        "content-type": "application-json",
+        username: formData.username,
+        password: formData.password,
+      },
+    }
+  );
   const result = await response.json();
   try {
     if (result.authorization) {
@@ -34,6 +39,7 @@ async function login(
   } catch (e) {
     console.log(e);
   }
+  setIsLoading(false);
 }
 
 export { login };

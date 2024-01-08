@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { signup } from "../utils/signup";
 import { useNavigate } from "react-router-dom";
+import Spinner from "./ui/Spinner";
 
 export default function SignupForm() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ export default function SignupForm() {
 
   const navigation = useNavigate();
   const [isInputUnvalid, setIsInputUnvalid] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
 
   const handleChange = (evt) => {
     const fieldName = evt.target.name;
@@ -74,11 +76,11 @@ export default function SignupForm() {
 
         <button
           onClick={(evt) => {
-            signup(evt, formData, setIsInputUnvalid, navigation);
+            signup(evt, formData, setIsInputUnvalid, navigation, setIsLoading);
           }}
-          className="w-full h-10 bg-[#2b2d42] rounded-lg uppercase text-[#f4f3ee] font-semibold"
+          className="w-full h-10 bg-[#2b2d42] rounded-lg uppercase text-[#f4f3ee] font-semibold flex justify-center items-center"
         >
-          Sign Up
+          {isloading ? <Spinner /> : "Sign Up"}
         </button>
         {isInputUnvalid ? (
           <h1 className="text-center text-xl font-semibold text-[#ef233c]">

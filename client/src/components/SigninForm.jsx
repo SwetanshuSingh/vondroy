@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { login } from "../utils/login";
 import { useNavigate } from "react-router-dom";
+import Spinner from "./ui/Spinner";
 
 export default function SigninForm() {
   const [formData, setFormData] = useState({
@@ -13,13 +14,14 @@ export default function SigninForm() {
   const navigate = useNavigate();
   const [isInputUnvalid, setIsInputUnvalid] = useState(false);
   const [authorizationToken, setAuthorizationToken] = useState(null);
+  const [isloading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('authorization', JSON.stringify(authorizationToken))
-    if(authorizationToken){
+    localStorage.setItem("authorization", JSON.stringify(authorizationToken));
+    if (authorizationToken) {
       navigate("/chat");
     }
-  }, [authorizationToken])
+  }, [authorizationToken]);
 
   const handleChange = (evt) => {
     const fieldName = evt.target.name;
@@ -83,11 +85,17 @@ export default function SigninForm() {
 
         <button
           onClick={(evt) => {
-            login(evt, formData, setIsInputUnvalid, setAuthorizationToken);
+            login(
+              evt,
+              formData,
+              setIsInputUnvalid,
+              setAuthorizationToken,
+              setIsLoading
+            );
           }}
-          className="w-full h-10 bg-[#2b2d42] text-[#f4f3ee] rounded-lg uppercase font-semibold"
+          className="w-full h-10 bg-[#2b2d42] text-[#f4f3ee] rounded-lg uppercase font-semibold flex justify-center items-center"
         >
-          Sign in
+          {isloading ? <Spinner /> : "Sign In"}
         </button>
         {isInputUnvalid ? (
           <h1 className="text-center text-xl font-semibold text-[#ef233c]">
