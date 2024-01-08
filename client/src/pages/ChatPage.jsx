@@ -21,13 +21,13 @@ export default function Chatpage() {
   }, []);
 
   return (
-    <main className="min-h-[100vh] w-full font-mono bg-[#c6edc3] flex flex-col gap-5 items-center py-10">
+    <main className="min-h-[100vh] w-full font-mono bg-[#f4f3ee] flex flex-col gap-5 items-center py-10">
       <div className="heading text-center text-2xl font-semibold">
         <h1>Coming Soon!</h1>
         <h2>Total Users Registered : {users.length}</h2>
       </div>
       <div className="users">
-        <ul className="text-lg list-disc">{users ? users.map((user) => {
+        <ul className="text-lg list-disc flex flex-col flex-wrap">{users ? users.map((user) => {
             return (<li key={user}>{user}</li>)
         }) : (<h2>No Users Found</h2>)}</ul>
       </div>
