@@ -21,7 +21,7 @@ async function login(
   setIsLoading(true);
 
   const response = await fetch(
-    `${import.meta.env.VITE_DEV_PROD_URL}/signin`,
+    `${import.meta.env.VITE_PROD_BACKEND_URL}/signin`,
     {
       method: "GET",
       headers: {
