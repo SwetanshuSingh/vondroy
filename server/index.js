@@ -4,7 +4,7 @@ const signup = require("./routes/signup");
 const signin = require("./routes/signin");
 const users = require("./routes/users");
 
-const PORT = process.env.PORT;
+const PORT = process.env.SERVER_PORT;
 
 const app = express();
 
