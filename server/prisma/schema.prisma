@@ -10,3 +10,13 @@ datasource db {
   url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
+
+model User {
+  id         Int    @id @default(autoincrement())
+  username   String @unique
+  password   String
+  email      String @unique
+  firstname  String
+  lastname   String
+  profilePic String
+}
