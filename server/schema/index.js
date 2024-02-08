@@ -9,5 +9,10 @@ const userSchema = zod.object({
   gender : zod.string()
 });
 
+const loginSchema = zod.object({
+  username : zod.string(),
+  email : zod.string().email(),
+  password : zod.string().min(6)
+})
 
-export default userSchema;
+export { userSchema, loginSchema };
