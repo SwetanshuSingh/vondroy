@@ -4,15 +4,16 @@ type InputFieldProps = {
     fieldValue : string,
     placeholder : string,
     fieldType : string
-    inputValue : {username: string; email: string; password: string; [key : string] : string}
-    setInputValue : React.Dispatch<React.SetStateAction<{username : string, email : string, password : string}>>
+    formData : {username : string ; email: string; password: string; [key : string] : string}
+    setFormData : React.Dispatch<React.SetStateAction<{username : string, email : string, password : string}>>
 }
 
-const InputField = ({ fieldValue, placeholder, fieldType, inputValue, setInputValue } : InputFieldProps): React.JSX.Element => {
+const InputField = ({ fieldValue, placeholder, fieldType, formData, setFormData } : InputFieldProps): React.JSX.Element => {
 
-  const handleChange = (evt : ChangeEvent<HTMLInputElement>){
-    setInputValue((prev) => {
-      return ({...prev,evt.target.name = evt.target.value})
+  const handleChange = (evt : ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => {
+      prev[evt.target.name] = evt.target.value
+      return {...prev}
     })
   }
 
@@ -26,10 +27,10 @@ const InputField = ({ fieldValue, placeholder, fieldType, inputValue, setInputVa
         id={fieldValue}
         name={fieldValue}
         type={fieldType}
-        value={inputValue[fieldValue]}
-        // onChange={handleChange}
+        value={formData[fieldValue]}
+        onChange={(evt) => {handleChange(evt)}}
         placeholder={placeholder}
-        className="w-[400px] h-[45px] border-2 border-gray-300 outline-none rounded-lg py-2 px-3 font-normal text-sm tracking-widest"
+        className="w-full h-[45px] border-2 border-gray-300 outline-none rounded-lg py-2 px-3 font-normal text-sm tracking-widest"
       />
     </div>
   );
