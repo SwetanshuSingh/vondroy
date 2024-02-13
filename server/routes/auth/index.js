@@ -58,7 +58,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   const result = loginSchema.safeParse(req.body);
 
   if (result.success !== true) {
