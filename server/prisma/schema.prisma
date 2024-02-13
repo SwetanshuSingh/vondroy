@@ -12,11 +12,32 @@ datasource db {
 }
 
 model User {
-  id         Int    @id @default(autoincrement())
-  username   String @unique
-  password   String
-  email      String @unique
-  firstname  String
-  lastname   String
-  profilePic String
+  id               String         @id @default(uuid())
+  username         String         @unique
+  password         String
+  email            String         @unique
+  firstname        String
+  lastname         String
+  profilePic       String
+  sentMessages     Message[]      @relation("messagesSent")
+  receivedMessages Message[]      @relation("messagesReceived")
+  conversation     Conversation[] @relation("participant")
+}
+
+model Message {
+  messagId      String         @id @default(uuid())
+  senderId      String
+  receiverId    String
+  message       String
+  createdAt     DateTime       @default(now())
+  sender        User           @relation("messagesSent", fields: [senderId], references: [id])
+  receiver      User           @relation("messagesReceived", fields: [receiverId], references: [id])
+  conversations Conversation[]
+}
+
+model Conversation {
+  conversationId String    @id @default(uuid())
+  messages       Message[]
+  users          User[]    @relation("participant")
+  createdAt      DateTime  @default(now())
 }
