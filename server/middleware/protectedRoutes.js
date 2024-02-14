@@ -26,7 +26,7 @@ const protectedRoutes = async (req, res, next) => {
             }
         })
 
-        console.log(user);
+        req.senderId = user.id
         next();
 
 
