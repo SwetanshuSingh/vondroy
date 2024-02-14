@@ -6,38 +6,21 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id               String         @id @default(uuid())
-  username         String         @unique
-  password         String
-  email            String         @unique
-  firstname        String
-  lastname         String
-  profilePic       String
-  sentMessages     Message[]      @relation("messagesSent")
-  receivedMessages Message[]      @relation("messagesReceived")
-  conversation     Conversation[] @relation("participant")
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  username   String @unique
+  password   String
+  email      String @unique
+  firstname  String
+  lastname   String
+  profilePic String
 }
 
 model Message {
-  messagId      String         @id @default(uuid())
-  senderId      String
-  receiverId    String
-  message       String
-  createdAt     DateTime       @default(now())
-  sender        User           @relation("messagesSent", fields: [senderId], references: [id])
-  receiver      User           @relation("messagesReceived", fields: [receiverId], references: [id])
-  conversations Conversation[]
-}
-
-model Conversation {
-  conversationId String    @id @default(uuid())
-  messages       Message[]
-  users          User[]    @relation("participant")
-  createdAt      DateTime  @default(now())
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  body String
 }
