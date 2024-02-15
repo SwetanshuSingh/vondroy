@@ -10,44 +10,51 @@ router.post("/send/:receiverId", protectedRoutes, async (req, res) => {
   const { message } = req.body;
   const { senderId } = req;
 
-  let conversation = await prisma.conversation.findFirst({
-    where: {
-      participantsId: { hasEvery: [senderId, receiverId] },
-    },
-  });
-
-  if (!conversation) {
-    conversation = await prisma.conversation.create({
-      data: {
-        participantsId: [senderId, receiverId],
-      },
-    });
-  }
-
-  const previousMessageIds = conversation.messagesId;
-
-  const newMessage = await prisma.message.create({
-    data: {
-      body: message,
-      senderId: senderId,
-      receiverId: receiverId,
-    },
-  });
-
-  if (newMessage) {
-    const data = await prisma.conversation.update({
+  try {
+    let conversation = await prisma.conversation.findFirst({
       where: {
-        conversationId: conversation.conversationId,
-      },
-      data: {
-        messagesId: [...previousMessageIds, newMessage.messageId],
+        participantsId: { hasEvery: [senderId, receiverId] },
       },
     });
-  }
+  
+    if (!conversation) {
+      conversation = await prisma.conversation.create({
+        data: {
+          participantsId: [senderId, receiverId],
+        },
+      });
+    }
+  
+    const previousMessageIds = conversation.messagesId;
+  
+    const newMessage = await prisma.message.create({
+      data: {
+        body: message,
+        senderId: senderId,
+        receiverId: receiverId,
+      },
+    });
+  
+    if (newMessage) {
+      const data = await prisma.conversation.update({
+        where: {
+          conversationId: conversation.conversationId,
+        },
+        data: {
+          messagesId: [...previousMessageIds, newMessage.messageId],
+        },
+      });
+    }
+  
+    return res.json({
+      message: "message sent",
+    });
 
-  res.json({
-    message: senderId,
-  });
+  } catch (error) {
+    res.status(500).json({
+      error : "Internal Server Error"
+    })
+  }
 });
 
 router.get("/:userToChatWith", protectedRoutes, async (req, res) => {
@@ -71,6 +78,7 @@ router.get("/:userToChatWith", protectedRoutes, async (req, res) => {
     return res.status(200).json({
       messages: conversation,
     });
+    
   } catch (error) {
     res.status(500).json({
       message: "Internal Server Error",
