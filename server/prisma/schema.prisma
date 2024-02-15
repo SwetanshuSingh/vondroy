@@ -11,16 +11,33 @@ datasource db {
 }
 
 model User {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  username   String @unique
-  password   String
-  email      String @unique
-  firstname  String
-  lastname   String
-  profilePic String
+  id               String         @id @default(auto()) @map("_id") @db.ObjectId
+  username         String         @unique
+  password         String
+  email            String         @unique
+  firstname        String
+  lastname         String
+  profilePic       String
+  conversationId   String[]       @db.ObjectId
+  messagesSent     Message[]      @relation("sentMessages")
+  messagesReceived Message[]      @relation("receivedMessages")
+  conversation     Conversation[] @relation(fields: [conversationId], references: [conversationId])
 }
 
 model Message {
-  id   String @id @default(auto()) @map("_id") @db.ObjectId
-  body String
+  messageId      String       @id @default(auto()) @map("_id") @db.ObjectId
+  body           String
+  senderId       String       @db.ObjectId
+  receiverId     String       @db.ObjectId
+  conversationId String       @db.ObjectId
+  sender         User         @relation("sentMessages", fields: [senderId], references: [id])
+  receiver       User         @relation("receivedMessages", fields: [receiverId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [conversationId])
+}
+
+model Conversation {
+  conversationId String    @id @default(auto()) @map("_id") @db.ObjectId
+  messages       Message[]
+  userId         String[]  @db.ObjectId
+  user           User[]    @relation(fields: [userId], references: [id])
 }

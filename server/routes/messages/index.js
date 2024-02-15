@@ -11,11 +11,14 @@ router.post("/send/:receiverId", protectedRoutes,  async (req, res) => {
     const { message } = req.body
     const { senderId } = req
 
-    const conversation = prisma.conversation.findFirst({
+    const conversation = await prisma.conversation.findFirst({
         where : {
-            
+            userId : { hasEvery : [senderId, receiverId] }
         }
     })
+
+    console.log(conversation)
+
 
     res.json({
         message : senderId
