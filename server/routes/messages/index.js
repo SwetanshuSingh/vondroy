@@ -11,15 +11,41 @@ router.post("/send/:receiverId", protectedRoutes,  async (req, res) => {
     const { message } = req.body
     const { senderId } = req
 
-    const conversation = await prisma.conversation.findFirst({
+    let conversation = await prisma.conversation.findFirst({
         where : {
-            userId : { hasEvery : [senderId, receiverId] }
+            participantsId : { hasEvery : [senderId, receiverId] }
         }
     })
 
-    console.log(conversation)
+    if(!conversation){
+        conversation = await prisma.conversation.create({
+            data : {
+                participantsId : [senderId, receiverId]
+            }
+        })
+    }
 
+    const previousMessageIds = conversation.messagesId;
 
+    const newMessage = await prisma.message.create({
+        data : {
+            body : message,
+            senderId : senderId,
+            receiverId : receiverId
+        }
+    })
+
+    if(newMessage){
+        const data = await prisma.conversation.update({
+            where : {
+                conversationId : conversation.conversationId
+            },
+            data : {
+                messagesId : [...previousMessageIds, newMessage.messageId]
+            }
+        })
+    }
+    
     res.json({
         message : senderId
     })
