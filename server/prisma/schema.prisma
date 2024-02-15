@@ -19,25 +19,28 @@ model User {
   lastname         String
   profilePic       String
   conversationId   String[]       @db.ObjectId
-  messagesSent     Message[]      @relation("sentMessages")
-  messagesReceived Message[]      @relation("receivedMessages")
+  messagesSent     Message[]      @relation(name: "sender")
+  messagesReceived Message[]      @relation(name: "receiver")
   conversation     Conversation[] @relation(fields: [conversationId], references: [conversationId])
 }
 
 model Message {
-  messageId      String       @id @default(auto()) @map("_id") @db.ObjectId
+  messageId      String         @id @default(auto()) @map("_id") @db.ObjectId
   body           String
-  senderId       String       @db.ObjectId
-  receiverId     String       @db.ObjectId
-  conversationId String       @db.ObjectId
-  sender         User         @relation("sentMessages", fields: [senderId], references: [id])
-  receiver       User         @relation("receivedMessages", fields: [receiverId], references: [id])
-  conversation   Conversation @relation(fields: [conversationId], references: [conversationId])
+  senderId       String         @db.ObjectId
+  receiverId     String         @db.ObjectId
+  conversationId String[]       @db.ObjectId
+  createdAt      DateTime       @default(now())
+  sender         User           @relation(name: "sender", fields: [senderId], references: [id])
+  receiver       User           @relation(name: "receiver", fields: [receiverId], references: [id])
+  coversation    Conversation[] @relation(fields: [conversationId], references: [conversationId])
 }
 
 model Conversation {
   conversationId String    @id @default(auto()) @map("_id") @db.ObjectId
-  messages       Message[]
-  userId         String[]  @db.ObjectId
-  user           User[]    @relation(fields: [userId], references: [id])
+  participantsId String[]  @db.ObjectId
+  messagesId     String[]  @db.ObjectId
+  createdAt      DateTime  @default(now())
+  participants   User[]    @relation(fields: [participantsId], references: [id])
+  messages       Message[] @relation(fields: [messagesId], references: [messageId])
 }
