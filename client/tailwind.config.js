@@ -6,7 +6,7 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily : ["Noto Sans", "sans-serif"]
+      fontFamily : ["Poppins", "sans-serif"]
     },
   },
   plugins: [],
