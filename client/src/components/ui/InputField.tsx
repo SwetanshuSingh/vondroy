@@ -1,36 +1,41 @@
 import { ChangeEvent } from "react";
 
-type InputFieldProps = {
-    fieldValue : string,
-    placeholder : string,
-    fieldType : string
-    formData : {username : string ; email: string; password: string; [key : string] : string}
-    setFormData : React.Dispatch<React.SetStateAction<{username : string, email : string, password : string}>>
+interface FormData {
+  [key : string] : string
 }
 
-const InputField = ({ fieldValue, placeholder, fieldType, formData, setFormData } : InputFieldProps): React.JSX.Element => {
+interface InputFieldProps {
+  labelName : string,
+  fieldName : string,
+  formData : FormData,
+  placeholderText : string,
+  fieldType : string,
+  setFormData : React.Dispatch<React.SetStateAction<FormData>>
+}
+
+const InputField = ({ labelName, fieldName, formData, placeholderText, fieldType, setFormData } : InputFieldProps): React.JSX.Element => {
 
   const handleChange = (evt : ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => {
-      prev[evt.target.name] = evt.target.value
-      return {...prev}
+    setFormData((prev : FormData) => {
+      prev[evt.target.name] = evt.target.value;
+      return { ...prev }
     })
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={fieldValue} className="text-[#2b2b2b] font-normal capitalize">
-        {fieldValue} :
+    <div className="w-[50%] flex flex-col gap-1">
+      <label className="text-sm" htmlFor="firstname">
+        { labelName }
       </label>
-
       <input
-        id={fieldValue}
-        name={fieldValue}
+        name={ fieldName }
+        value={ formData[fieldName] }
         type={fieldType}
-        value={formData[fieldValue]}
-        onChange={(evt) => {handleChange(evt)}}
-        placeholder={placeholder}
-        className="w-full h-[45px] border-2 border-gray-300 outline-none rounded-lg py-2 px-3 font-normal text-sm tracking-widest"
+        onChange={(evt) => {
+          handleChange(evt);
+        }}
+        placeholder={placeholderText}
+        className="w-full border border-gray-300 outline-none px-2 py-2 rounded-md shadow-sm font-light text-sm placeholder:text-sm placeholder:font-normal"
       />
     </div>
   );
