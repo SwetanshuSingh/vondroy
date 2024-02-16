@@ -2,14 +2,21 @@ import SignupForm from "../components/SignupForm";
 
 const SignupPage = (): React.JSX.Element => {
   return (
-    <section className="w-full h-[100vh] flex flex-col justify-center items-center font-0 gap-8">
-      <div className="flex flex-col items-center gap-2">
-        <h1 className="text-[#2b2b2b] text-4xl font-extrabold">Vondroy</h1>
-        <h2 className="text-[#2b2b2b] font-light text-2xl">Let&apos;s set up your vondroy account!</h2>
-      </div>
-      <SignupForm />
-    </section>
-  );
+    <main className="w-full h-[100vh] bg-[#e8ebed] flex justify-center items-center">
+
+      <section className="bg-white p-8 rounded-lg flex flex-col gap-8">
+
+        <div className="heading font-0 text-[#353535] flex flex-col gap-2">
+          <img className="w-12 h-12" src="/logos/conversify-logo.png" alt="logo" />
+          <h2 className="font-medium text-3xl">Sign Up</h2>
+          <p className="font-light">Enter your details below to create your account and get started.</p>
+        </div>
+
+        <SignupForm />
+
+      </section>
+    </main>
+  )
 };
 
 export default SignupPage;
