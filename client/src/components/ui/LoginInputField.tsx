@@ -4,7 +4,7 @@ interface FormData {
   [key : string] : string
 }
 
-interface InputFieldProps {
+interface LoginInputFieldProps {
   labelName : string,
   fieldName : string,
   formData : FormData,
@@ -13,7 +13,7 @@ interface InputFieldProps {
   setFormData : React.Dispatch<React.SetStateAction<FormData>>
 }
 
-const InputField = ({ labelName, fieldName, formData, placeholderText, fieldType, setFormData } : InputFieldProps): React.JSX.Element => {
+const LoginInputField = ({ labelName, fieldName, formData, placeholderText, fieldType, setFormData } : LoginInputFieldProps): React.JSX.Element => {
 
   const handleChange = (evt : ChangeEvent<HTMLInputElement>) => {
     setFormData((prev : FormData) => {
@@ -23,7 +23,7 @@ const InputField = ({ labelName, fieldName, formData, placeholderText, fieldType
   }
 
   return (
-    <div className="w-[50%] flex flex-col gap-1">
+    <div className="w-full min-w-80 flex flex-col gap-1">
       <label className="text-sm" htmlFor={fieldName}>
         { labelName }
       </label>
@@ -41,4 +41,4 @@ const InputField = ({ labelName, fieldName, formData, placeholderText, fieldType
   );
 };
 
-export default InputField;
+export default LoginInputField;
