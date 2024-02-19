@@ -1,10 +1,12 @@
-interface formData {
-    username: string,
-    email: string,
-    password: string
-}
+import { FormEvent } from "react";
 
-const submitLoginForm =  async (evt : React.MouseEvent<HTMLButtonElement, MouseEvent>, formData : formData) =>{
+interface FormData {
+    [key : string] : string
+  }
+
+type Event = FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement, MouseEvent>
+
+const submitLoginForm =  async (evt : Event, formData : FormData) =>{
     evt.preventDefault();
     const response : Response  = await fetch("http://localhost:3000/api/auth/login", {
         method : "POST",
