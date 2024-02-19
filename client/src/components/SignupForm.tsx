@@ -32,8 +32,8 @@ const SignupForm = () : React.JSX.Element => {
       </div>
 
       <section className="w-full flex gap-2">
-        <button className="w-[50%] bg-[#353535] text-white font-medium py-1 rounded-md shadow-sm">Confirm</button>
-        <button className="w-[50%] border border-[#353535] font-medium py-1 rounded-md shadow-sm">Cancel</button>
+        <button className="w-[50%] border border-[#353535] font-medium py-2 rounded-md shadow-sm">Cancel</button>
+        <button className="w-[50%] bg-[#353535] text-white font-medium py-2 rounded-md shadow-sm">Confirm</button>
       </section>
       
     </form>
