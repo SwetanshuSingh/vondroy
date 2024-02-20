@@ -1,6 +1,6 @@
 const UserCard = () : React.JSX.Element => {
     return (
-        <main className="p-2 w-72 font-0 flex border border-gray-500 rounded-lg justify-between">
+        <main className="p-2 w-72 font-0 flex border border-gray-500 rounded-lg justify-between cursor-default">
             <div className="left flex gap-2">
                 <div className="profile">
                     <img className="w-14 h-14 border border-gray-400 rounded-full box-border" src="https://avatar.iran.liara.run/public/boy?username=Swetanshu" alt="avatar" />

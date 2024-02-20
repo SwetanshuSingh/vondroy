@@ -22,7 +22,7 @@ router.post("/signup", async (req, res) => {
     },
   });
 
-  if (isExistingUser === !null) {
+  if (isExistingUser !== null) {
     return res.status(403).json({
       message: "User aleardy Exists",
     });
@@ -47,7 +47,7 @@ router.post("/signup", async (req, res) => {
         profilePic: profileAvatar,
       },
     });
-    return res.json({
+    return res.status(200).json({
       message: `User successfully created with username ${user.username}`,
     });
   } catch (err) {
