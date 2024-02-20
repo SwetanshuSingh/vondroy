@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import zod from "zod";
+import { AuthContext } from "../context/AuthContext";
 
 interface FormData {
     [key : string] : string
@@ -14,6 +15,7 @@ const userLoginSchema = zod.object({
 
 const useLogin = () => {
     const [loading, setIsLoading] = useState(false);
+    const { setAuthUser } = useContext(AuthContext);
     
     const login = async (formData : FormData) => {
         const { success } = userLoginSchema.safeParse(formData);
@@ -36,6 +38,8 @@ const useLogin = () => {
             return toast.error(data.message);
         }
 
+        localStorage.setItem("chat-user", JSON.stringify(data.credentials))
+        setAuthUser(data.credentials)
         return toast.success(data.message);
 
      } catch (error) {
