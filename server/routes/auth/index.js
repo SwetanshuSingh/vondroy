@@ -96,7 +96,7 @@ router.post("/login", async (req, res) => {
     genereateTokenandSetcookie(req.body.username, req.body.email, res);
     res.json({
       message: "Successfully logged in",
-      data : user.id
+      credentials : {id : user.id, username : user.username, email : user.email, firstname : user.firstname, lastname : user.lastname, profile : user.profilePic}
     });
   } catch (error) {
     res.status(500).json({
