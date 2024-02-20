@@ -16,7 +16,7 @@ const userSchema = zod.object({
   });
 
 const useSignup = () => {
-    const [loading, setIsloading] = useState(false);
+    const [loading, setIsLoading] = useState(false);
 
     const signup = async (formData : FormData) => {
 
@@ -25,7 +25,7 @@ const useSignup = () => {
             return toast.error("Invalid Form Details");            
         }
 
-        setIsloading(true);
+        setIsLoading(true);
         try {
             const response = await fetch("http://localhost:3000/api/auth/signup", {
                 method : "POST",
@@ -47,7 +47,7 @@ const useSignup = () => {
         } catch (error) {
             toast.error("Internal Server Error")       
         } finally{
-            setIsloading(false);
+            setIsLoading(false);
         }
     }
 
