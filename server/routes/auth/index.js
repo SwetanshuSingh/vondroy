@@ -47,9 +47,10 @@ router.post("/signup", async (req, res) => {
         profilePic: profileAvatar,
       },
     });
+
     return res.status(200).json({
       message: `User successfully created with username ${user.username}`,
-      data : user.id
+      credentials : {id : user.id, username : user.username, email : user.email, firstname : user.firstname, lastname : user.lastname, profile : user.profilePic}
     });
   } catch (err) {
     console.log(err);

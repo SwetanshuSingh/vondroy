@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import zod from "zod"
 import toast from "react-hot-toast";
+import { AuthContext } from "../context/AuthContext";
 
 interface FormData {
     [key : string] : string
@@ -17,6 +18,8 @@ const userSchema = zod.object({
 
 const useSignup = () => {
     const [loading, setIsLoading] = useState(false);
+
+    const { setAuthUser } = useContext(AuthContext)
 
     const signup = async (formData : FormData) => {
 
@@ -36,13 +39,15 @@ const useSignup = () => {
             });
 
             const data = await response.json();
-            if(!data.success){
+            if(response.status !== 200){
                 return toast.error(data.message);
             }
 
-            //Add navigate to chat page later..
-            return toast.success(data.message)
+            localStorage.setItem("chat-user", JSON.stringify(data.credentials));
+            setAuthUser(data);
 
+            //Add navigate to chat page later..
+            return toast.success(data.message);
 
         } catch (error) {
             toast.error("Internal Server Error")       
