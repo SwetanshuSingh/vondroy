@@ -49,6 +49,7 @@ router.post("/signup", async (req, res) => {
     });
     return res.status(200).json({
       message: `User successfully created with username ${user.username}`,
+      data : user.id
     });
   } catch (err) {
     console.log(err);
@@ -94,6 +95,7 @@ router.post("/login", async (req, res) => {
     genereateTokenandSetcookie(req.body.username, req.body.email, res);
     res.json({
       message: "Successfully logged in",
+      data : user.id
     });
   } catch (error) {
     res.status(500).json({
