@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { ConversationsContext } from "../context/ConversationsContext";
+import { UsersContext } from "../context/UsersContext";
 import toast from "react-hot-toast";
 
 const useGetConversation = () => {
     const [loading, setIsLoading] = useState(false);
-    const { conversations, setConversations } = useContext(ConversationsContext);
+    const { users, setUsers } = useContext(UsersContext);
 
     useEffect(() => {
         const fetchConversation = async() => {
@@ -13,7 +13,7 @@ const useGetConversation = () => {
             try {
                 const response = await fetch("/api/users")
                 const conversations = await response.json();
-                setConversations(conversations.message);
+                setUsers(conversations.message);
             } catch (error) {
                 toast.error("Internal Server Eroor")
             } finally{
@@ -22,7 +22,7 @@ const useGetConversation = () => {
         }
         fetchConversation();
     }, [])
-    return { loading, conversations };
+    return { loading, users };
 }
 
 export default useGetConversation;
