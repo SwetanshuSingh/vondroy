@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ConversationContext } from "../context/ConversationContext";
 import { AuthContext } from "../context/AuthContext";
+import UserMessages from "./UserMessges";
 
 const UserChat = () => {
   const { selectedConversation } = useContext(ConversationContext);
@@ -24,7 +25,8 @@ const UserChat = () => {
             </div>
           </div>
 
-          <div className="messages flex-grow"></div>
+          <UserMessages />
+          {/* <div className="messages flex-grow"></div>
 
           <div className="w-full send-message flex gap-2">
             <input
@@ -34,7 +36,7 @@ const UserChat = () => {
             <button className="border border-gray-600 rounded-md px-2">
               Send
             </button>
-          </div>
+          </div> */}
         </>
       ) : (
         <div className="skeleton w-full h-full flex flex-col items-center justify-center">
