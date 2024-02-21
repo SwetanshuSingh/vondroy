@@ -18,7 +18,7 @@ const App = (): React.JSX.Element => {
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={ auth ? <Navigate to="/chat" /> : <SignupPage /> } />
           <Route path="/login" element={ auth ? <Navigate to="/chat" /> : <LoginPage /> } />
-          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/chat" element={ auth ? <ChatPage /> : <Navigate to="/login" /> } />
         </Routes>
       </BrowserRouter>
   );

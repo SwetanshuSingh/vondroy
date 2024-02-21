@@ -30,7 +30,7 @@ const useSignup = () => {
 
         setIsLoading(true);
         try {
-            const response = await fetch("http://localhost:3000/api/auth/signup", {
+            const response = await fetch("/api/auth/signup", {
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"
