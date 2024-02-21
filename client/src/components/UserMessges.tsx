@@ -1,19 +1,19 @@
 import { useContext, useState } from "react";
 import useSendMessage from "../hooks/useSendMessage";
 import { MessagesContext } from "../context/MessagesContext";
+import useGetMessages from "../hooks/useGetmessages";
+import MessageScreen from "./MessageScreen";
 
 const UserMessages = () : React.JSX.Element => {
 
     const [message, setUserMessage] = useState('');
     const {loading, sendMessage} = useSendMessage();
-    const { messages } = useContext(MessagesContext);
-
+    
     const handleChange = (evt) => {
         setUserMessage(evt.target.value)
     }
 
     const handleSubmit = async() => {
-        console.log('clicked')
         if(!message){
             return
         }
@@ -23,8 +23,8 @@ const UserMessages = () : React.JSX.Element => {
 
     return (
         <>
-        <div className="messages flex-grow"></div>
-
+        
+          <MessageScreen />
           <div className="w-full send-message flex gap-2">
             <input
               className="w-full border border-gray-400 outline-none rounded-md px-2 py-1"
