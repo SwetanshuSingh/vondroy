@@ -1,12 +1,12 @@
-const UserCard = () : React.JSX.Element => {
+const UserCard = ({ userDetails }) : React.JSX.Element => {
     return (
-        <main className="p-2 w-72 font-0 flex border border-gray-500 rounded-lg justify-between cursor-default">
+        <main className="p-2 w-72 font-0 flex border border-gray-500 rounded-lg justify-between cursor-default hover:bg-gray-200">
             <div className="left flex gap-2">
                 <div className="profile">
-                    <img className="w-14 h-14 border border-gray-400 rounded-full box-border" src="https://avatar.iran.liara.run/public/boy?username=Swetanshu" alt="avatar" />
+                    <img className="w-14 h-14 border border-gray-400 rounded-full box-border" src={userDetails.profilePic} alt="avatar" />
                 </div>
                 <div className="text text-[#353535] flex flex-col justify-center gap-2">
-                    <h3 className="text-sm">Swetanshu</h3>
+                    <h3 className="text-sm">{ userDetails.firstname }</h3>
                     <p className="text-xs text-gray-400">Brooo</p>
                 </div>
             </div>
