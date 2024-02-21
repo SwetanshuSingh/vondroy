@@ -43,12 +43,15 @@ router.post("/send/:receiverId", protectedRoutes, async (req, res) => {
         data: {
           messagesId: [...previousMessageIds, newMessage.messageId],
         },
+        include : {
+          messages : true
+        }
+      });
+      return res.json({
+        message: "message sent",
+        messages : data.messages
       });
     }
-  
-    return res.json({
-      message: "message sent",
-    });
 
   } catch (error) {
     res.status(500).json({
