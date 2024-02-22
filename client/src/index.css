@@ -7,3 +7,8 @@
     display: none;
     scrollbar-width: none;
 }
+
+.messages::-webkit-scrollbar{
+    display: none;
+    scrollbar-width: none;
+}
