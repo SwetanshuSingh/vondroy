@@ -23,10 +23,9 @@ const useSendMessage = () => {
             if(data.error){
                 return toast.error("Cannot send message")
             }
-            setMessages({messages : data.messages})
+            setMessages(data.messages)
 
         } catch (error) {
-            console.log(error);
             toast.error("Internal Server Error");
         } finally{
             setIsLoading(false);
