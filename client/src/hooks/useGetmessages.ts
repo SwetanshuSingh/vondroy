@@ -14,7 +14,7 @@ const useGetMessages = () => {
         try {
             const response = await fetch(`/api/messages/${selectedConversation.id}`);
             const data = await response.json();
-            setMessages(data.messages);
+            setMessages(data.messages.messages);
             
         } catch (error) {
             return toast.error("Internal Server Error")
@@ -29,7 +29,7 @@ const useGetMessages = () => {
         }
     }, [selectedConversation?.id])
 
-    return { loading, messages }
+    return { loading, messages, setMessages }
 }
 
 export default useGetMessages;

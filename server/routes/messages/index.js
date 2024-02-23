@@ -1,6 +1,7 @@
 import express from "express";
 import protectedRoutes from "../../middleware/protectedRoutes.js";
 import { PrismaClient } from "@prisma/client";
+import { getReceiverSocketId, io } from "../../socket/socket.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -47,6 +48,12 @@ router.post("/send/:receiverId", protectedRoutes, async (req, res) => {
           messages : true
         }
       });
+
+      const receiverSocketId = getReceiverSocketId(receiverId);
+      if(receiverSocketId){
+        io.to(receiverSocketId).emit("newMessage", newMessage);
+      }
+
       return res.json({
         message: "message sent",
         messages : data.messages

@@ -2,10 +2,12 @@ import { useContext, useEffect, useRef } from "react";
 import useGetMessages from "../hooks/useGetmessages";
 import { AuthContext } from "../context/AuthContext";
 import { ConversationContext } from "../context/ConversationContext";
+import useListenMessages from "../hooks/useListenMessages";
 
 const MessageScreen = (): React.JSX.Element => {
 
   const { messages } = useGetMessages();
+  useListenMessages();
   const {  auth } = useContext(AuthContext);
   const { selectedConversation } = useContext(ConversationContext);
   const lastMessageRef = useRef();
@@ -16,12 +18,10 @@ const MessageScreen = (): React.JSX.Element => {
     }, 100);
   }, [messages])
   
-  const conversationMessages = messages?.messages;
-
   return (
     <div className="messages flex flex-col gap-3 flex-grow p-3 overflow-y-scroll">
-      {conversationMessages ? (
-        conversationMessages.map((message) => {
+      {messages ? (
+        messages.map((message) => {
           const fromMe = auth.id === message.senderId
           const chatClassname = fromMe ? 'flex-row-reverse' : 'flex-row';
           const borderClassname = fromMe ? 'rounded-l-md rounded-br-md' : 'rounded-r-md rounded-bl-md';
