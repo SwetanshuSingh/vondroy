@@ -1,10 +1,28 @@
-import { createContext, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 
-export const ConversationContext = createContext();
+type SelectedConversation = {
+    email : string,
+    firstname : string,
+    lastname : string,
+    id : string,
+    profilePic : string,
+    username : string
+}
 
-export const ConversationContextProvider = ({ children }) => {
+type ConversationContextType = {
+    selectedConversation : SelectedConversation | null,
+    setSelectedConversation : React.Dispatch<React.SetStateAction<SelectedConversation | null>>
+}
 
-    const [selectedConversation, setSelectedConversation] = useState();
+type ConversationContextProviderProps = {
+    children : ReactNode
+}
+
+export const ConversationContext = createContext<ConversationContextType | null>(null);
+
+export const ConversationContextProvider = ({ children } : ConversationContextProviderProps) => {
+
+    const [selectedConversation, setSelectedConversation] = useState<SelectedConversation | null>(null);
 
     return <ConversationContext.Provider value={{selectedConversation, setSelectedConversation}}>
         { children }

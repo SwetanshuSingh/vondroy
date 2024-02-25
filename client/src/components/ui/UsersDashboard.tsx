@@ -5,6 +5,7 @@ import UserCard from "../UserCard";
 const UsersDashboard = () : React.JSX.Element => {
 
     const {loading, users} = useGetConversation();
+    console.log(users);
 
     return (
         <main className="bg-white rounded-lg flex flex-col justify-start items-start gap-4 px-4 py-5 h-[500px] w-fit">
