@@ -5,11 +5,11 @@ import HomePage from "./pages/HomePage";
 import ChatPage from "./pages/ChatPage";
 import { Toaster } from "react-hot-toast";
 import { useContext } from "react";
-import { AuthContext } from "./context/AuthContext";
+import { AuthContext, AuthContextType } from "./context/AuthContext";
 
 const App = (): React.JSX.Element => {
 
-  const { auth } = useContext(AuthContext);
+  const { auth } = useContext<AuthContextType | null>(AuthContext)!;
 
   return (
       <BrowserRouter>

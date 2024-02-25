@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { ConversationContext } from "../context/ConversationContext";
-import { MessagesContext } from "../context/MessagesContext";
+import { ConversationContext, ConversationContextType } from "../context/ConversationContext";
+import { MessagesContext, MessagesContextType } from "../context/MessagesContext";
 
 const useGetMessages = () => {
     const [loading, setIsLoading] = useState(false);
-    const {selectedConversation} = useContext(ConversationContext);
-    const {messages, setMessages} = useContext(MessagesContext);
+    const {selectedConversation} = useContext<ConversationContextType | null>(ConversationContext)!;
+    const {messages, setMessages} = useContext<MessagesContextType | null>(MessagesContext)!;
 
     const getMessages = async() => {
         setIsLoading(true);
 
         try {
-            const response = await fetch(`/api/messages/${selectedConversation.id}`);
+            const response = await fetch(`/api/messages/${selectedConversation?.id}`);
             const data = await response.json();
             setMessages(data.messages.messages);
             

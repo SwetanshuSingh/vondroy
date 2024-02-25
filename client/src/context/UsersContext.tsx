@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
 
-type Users = {
+export type Users = {
     email : string,
     firstname : string,
     lastname : string,
@@ -9,7 +9,7 @@ type Users = {
     username : string
 }[]
 
-type UsersContextType = {
+export type UsersContextType = {
     users : Users | null,
     setUsers : React.Dispatch<React.SetStateAction<Users | null>>
 }

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import zod from "zod"
 import toast from "react-hot-toast";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 
 interface FormData {
     [key : string] : string
@@ -19,7 +19,7 @@ const userSchema = zod.object({
 const useSignup = () => {
     const [loading, setIsLoading] = useState(false);
 
-    const { setAuthUser } = useContext(AuthContext)
+    const { setAuthUser } = useContext<AuthContextType | null>(AuthContext)!
 
     const signup = async (formData : FormData) => {
 

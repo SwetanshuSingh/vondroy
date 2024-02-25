@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { ConversationContext } from "../context/ConversationContext";
+import { ConversationContext, ConversationContextType } from "../context/ConversationContext";
 import { useSocketContext } from "../context/SocketContext";
 
 const UserCard = ({ userDetails }) : React.JSX.Element => {
 
-    const {selectedConversation, setSelectedConversation} = useContext(ConversationContext);
+    const {selectedConversation, setSelectedConversation} = useContext<ConversationContextType | null>(ConversationContext)!;
     const isSelected = selectedConversation?.id === userDetails.id
     const { onlineUsers } = useSocketContext();
     const isOnline = onlineUsers.includes(userDetails.id)

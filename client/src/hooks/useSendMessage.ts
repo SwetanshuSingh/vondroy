@@ -1,17 +1,17 @@
 import { useContext, useState } from "react";
-import { MessagesContext } from "../context/MessagesContext";
+import { MessagesContext, MessagesContextType } from "../context/MessagesContext";
 import toast from "react-hot-toast";
-import { ConversationContext } from "../context/ConversationContext";
+import { ConversationContext, ConversationContextType } from "../context/ConversationContext";
 
 const useSendMessage = () => {
     const [loading, setIsLoading] = useState(false);
-    const {messages, setMessages} = useContext(MessagesContext);
-    const { selectedConversation } = useContext(ConversationContext);
+    const {setMessages} = useContext<MessagesContextType | null>(MessagesContext)!;
+    const { selectedConversation } = useContext<ConversationContextType | null>(ConversationContext)!;
 
-    const sendMessage = async(message) => {
+    const sendMessage = async(message : string) => {
         setIsLoading(true);
         try {
-            const response = await fetch(`/api/messages/send/${selectedConversation.id}`, {
+            const response = await fetch(`/api/messages/send/${selectedConversation?.id}`, {
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"

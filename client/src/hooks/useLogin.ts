@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import zod from "zod";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 
 interface FormData {
     [key : string] : string
@@ -15,7 +15,7 @@ const userLoginSchema = zod.object({
 
 const useLogin = () => {
     const [loading, setIsLoading] = useState(false);
-    const { setAuthUser } = useContext(AuthContext);
+    const { setAuthUser } = useContext<AuthContextType | null>(AuthContext)!;
     
     const login = async (formData : FormData) => {
         const { success } = userLoginSchema.safeParse(formData);
