@@ -9,7 +9,7 @@ type Messages = {
     receiverId : string
 }[]
 
-type MessagesContextType = {
+export type MessagesContextType = {
     messages : Messages | null,
     setMessages : React.Dispatch<React.SetStateAction<Messages | null>>
 }

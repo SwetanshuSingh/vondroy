@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import toast from "react-hot-toast";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 
 const useLogout = () => {
 
-    const { setAuthUser } = useContext(AuthContext);
+    const { setAuthUser } = useContext<AuthContextType | null>(AuthContext)!;
 
     const logout = async() => {
         try {

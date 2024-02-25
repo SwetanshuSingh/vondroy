@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { UsersContext } from "../context/UsersContext";
+import { UsersContext, UsersContextType } from "../context/UsersContext";
 import toast from "react-hot-toast";
 
 const useGetConversation = () => {
     const [loading, setIsLoading] = useState(false);
-    const { users, setUsers } = useContext(UsersContext);
+    const { users, setUsers } = useContext<UsersContextType | null>(UsersContext)!;
 
     useEffect(() => {
         const fetchConversation = async() => {

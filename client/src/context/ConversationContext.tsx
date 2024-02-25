@@ -9,7 +9,7 @@ type SelectedConversation = {
     username : string
 }
 
-type ConversationContextType = {
+export type ConversationContextType = {
     selectedConversation : SelectedConversation | null,
     setSelectedConversation : React.Dispatch<React.SetStateAction<SelectedConversation | null>>
 }

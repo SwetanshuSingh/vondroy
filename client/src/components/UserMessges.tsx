@@ -1,15 +1,13 @@
-import { useContext, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import useSendMessage from "../hooks/useSendMessage";
-import { MessagesContext } from "../context/MessagesContext";
-import useGetMessages from "../hooks/useGetmessages";
 import MessageScreen from "./MessageScreen";
 
 const UserMessages = () : React.JSX.Element => {
 
     const [message, setUserMessage] = useState('');
-    const {loading, sendMessage} = useSendMessage();
+    const {sendMessage} = useSendMessage();
     
-    const handleChange = (evt) => {
+    const handleChange = (evt : ChangeEvent<HTMLInputElement>) => {
         setUserMessage(evt.target.value)
     }
 

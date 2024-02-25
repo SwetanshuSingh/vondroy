@@ -5,7 +5,6 @@ import UserCard from "../UserCard";
 const UsersDashboard = () : React.JSX.Element => {
 
     const {loading, users} = useGetConversation();
-    console.log(users);
 
     return (
         <main className="bg-white rounded-lg flex flex-col justify-start items-start gap-4 px-4 py-5 h-[500px] w-fit">
@@ -14,7 +13,7 @@ const UsersDashboard = () : React.JSX.Element => {
                 {users && users.map((user) => {
                     return <UserCard key={user.id} userDetails = {user} />
                 })}
-                {loading ? <Loader2 className="animate-spin" /> : null}
+                {loading ? <div className="w-72 h-full flex justify-center items-center"><Loader2 className="animate-spin" /></div> : null}
             </div>
         </main>
     )

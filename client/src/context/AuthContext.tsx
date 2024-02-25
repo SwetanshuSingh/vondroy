@@ -9,9 +9,9 @@ type Auth = {
     username : string
 }
 
-type AuthContextType = {
-    auth : Auth,
-    setAuthUser : React.Dispatch<React.SetStateAction<Auth>>
+export type AuthContextType = {
+    auth : Auth | null,
+    setAuthUser : React.Dispatch<React.SetStateAction<Auth | null>>
 }
 
 type AuthContextProviderProps = {
@@ -26,7 +26,7 @@ export const useAuthContext = () => {
 }
 
 export const AuthContextProvider = ({ children } : AuthContextProviderProps) => {
-    const [auth, setAuthUser] = useState<Auth>(JSON.parse(localStorage.getItem("chat-user")!) || null)
+    const [auth, setAuthUser] = useState<Auth | null>(JSON.parse(localStorage.getItem("chat-user")!) || null)
 
     return <AuthContext.Provider value={{ auth, setAuthUser }}>
         { children }

@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { ConversationContext } from "../context/ConversationContext";
-import { AuthContext } from "../context/AuthContext";
+import { ConversationContext, ConversationContextType } from "../context/ConversationContext";
+import { AuthContext, AuthContextType } from "../context/AuthContext";
 import UserMessages from "./UserMessges";
 
 const UserChat = () => {
-  const { selectedConversation } = useContext(ConversationContext);
-  const { auth } = useContext(AuthContext);
+  const { selectedConversation } = useContext<ConversationContextType | null>(ConversationContext)!;
+  const { auth } = useContext<AuthContextType | null>(AuthContext)!;
 
   return (
     <main className="bg-white px-4 py-5 w-96 h-[500px] rounded-lg flex flex-col font-0">
@@ -40,7 +40,7 @@ const UserChat = () => {
         </>
       ) : (
         <div className="skeleton w-full h-full flex flex-col items-center justify-center">
-          <h2 className="text-xl">Welcome {auth.firstname} 👋</h2>
+          <h2 className="text-xl">Welcome {auth?.firstname} 👋</h2>
           <p className="font-light">Select to chat to start messaging</p>
         </div>
       )}
