@@ -1,18 +1,28 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useAuthContext } from "./AuthContext";
-import io from "socket.io-client";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import { AuthContextType, useAuthContext } from "./AuthContext";
+import io, { Socket } from "socket.io-client";
 
-const SocketContext = createContext();
+export type SocketContextType = {
+    socket? : Socket;
+    onlineUsers : string[]
+}
 
-export const useSocketContext = () => {
+type SocketContextProviderProps = {
+    children : ReactNode
+}
+
+const SocketContext = createContext<SocketContextType | undefined>(undefined);
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const useSocketContext = () : SocketContextType | undefined => {
     return useContext(SocketContext)
 }
 
-export const SocketContextProvider = ({children}) => {
+export const SocketContextProvider = ({children} : SocketContextProviderProps) => {
 
-    const [socket, setSocket] = useState();
-    const [onlineUsers, setOnlineUsers] = useState([]);
-    const {auth} = useAuthContext();
+    const [socket, setSocket] = useState<Socket | undefined>();
+    const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
+    const {auth} = useAuthContext() as AuthContextType;
 
     useEffect(() => {
         if(auth) {
@@ -27,11 +37,15 @@ export const SocketContextProvider = ({children}) => {
                 setOnlineUsers(users);
             })
 
-            return () => socket.close();
+            return () => {
+                if(socket){
+                    socket.close();
+                }
+            };
         } else {
             if (socket) {
                 socket.close();
-                setSocket(null);
+                setSocket(undefined);
             }
         }
     },[auth])

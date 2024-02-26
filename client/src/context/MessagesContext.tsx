@@ -5,7 +5,7 @@ type Messages = {
     conversationId : Array<unknown>,
     createdAt : string,
     senderId : string,
-    messsageId : string,
+    messageId : string,
     receiverId : string
 }[]
 

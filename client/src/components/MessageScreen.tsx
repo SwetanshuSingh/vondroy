@@ -3,10 +3,11 @@ import useGetMessages from "../hooks/useGetmessages";
 import { AuthContext, AuthContextType } from "../context/AuthContext";
 import { ConversationContext, ConversationContextType } from "../context/ConversationContext";
 import useListenMessages from "../hooks/useListenMessages";
+import { Loader } from "lucide-react";
 
 const MessageScreen = (): React.JSX.Element => {
 
-  const { messages } = useGetMessages();
+  const { loading, messages } = useGetMessages();
   useListenMessages();
   const {  auth } = useContext<AuthContextType | null>(AuthContext)!;
   const { selectedConversation } = useContext<ConversationContextType | null>(ConversationContext)!;
@@ -20,29 +21,33 @@ const MessageScreen = (): React.JSX.Element => {
   
   return (
     <div className="messages flex flex-col gap-3 flex-grow p-3 overflow-y-scroll">
-      {messages ? (
-        messages.map((message) => {
-          const fromMe = auth?.id === message.senderId
-          const chatClassname = fromMe ? 'flex-row-reverse' : 'flex-row';
-          const borderClassname = fromMe ? 'rounded-l-md rounded-br-md' : 'rounded-r-md rounded-bl-md';
-          const profilePic = fromMe ? auth.profile : selectedConversation?.profilePic;
+      {!loading &&
+      messages != undefined && 
+      messages?.length > 0
+       && messages?.map((message) => {
+        const fromMe = auth?.id === message.senderId
+        const chatClassname = fromMe ? 'flex-row-reverse' : 'flex-row';
+        const borderClassname = fromMe ? 'rounded-l-md rounded-br-md' : 'rounded-r-md rounded-bl-md';
+        const profilePic = fromMe ? auth.profile : selectedConversation?.profilePic;
 
-          return (
-            <div key={message.messsageId} ref={lastMessageRef} className={`${chatClassname} message flex justify-start gap-2`}>
-            <img
-              className="w-8 h-8 border border-gray-400 rounded-full box-border"
-              src={profilePic}
-              alt="avatar"
-            />
-            <div className={`${borderClassname} bg-gray-100 mt-2 w-fit max-w-[70%] h-auto text-sm p-2 flex justify-center items-center flex-wrap`}>
-              {message.body}
-            </div>
+        return (
+          <div key={message?.messageId} ref={lastMessageRef} className={`${chatClassname} message flex justify-start gap-2`}>
+          <img
+            className="w-8 h-8 border border-gray-400 rounded-full box-border"
+            src={profilePic}
+            alt="avatar"
+          />
+          <div className={`${borderClassname} bg-gray-100 mt-2 w-fit max-w-[70%] h-auto text-sm p-2 flex justify-center items-center flex-wrap`}>
+            {message.body}
           </div>
-          );
-        })
-      ) : (
-        <p>hii</p>
-      )}
+        </div>
+        );
+       })}
+
+       {loading && <div className="w-full h-full flex items-center justify-center"><Loader className="animate-spin" /></div>}
+       {!loading && (messages?.length == 0 || messages == undefined) && (
+        <p className="text-gray-600 text-sm text-center">Send a message to start conversation</p>
+       )}
     </div>
   );
 };
