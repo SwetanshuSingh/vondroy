@@ -21,7 +21,8 @@ const MessageScreen = (): React.JSX.Element => {
   
   return (
     <div className="messages flex flex-col gap-3 flex-grow p-3 overflow-y-scroll">
-      {!loading && 
+      {!loading &&
+      messages != undefined && 
       messages?.length > 0
        && messages?.map((message) => {
         const fromMe = auth?.id === message.senderId
