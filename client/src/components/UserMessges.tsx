@@ -24,7 +24,7 @@ const UserMessages = () : React.JSX.Element => {
         <>
         
           <MessageScreen />
-          <form onke onSubmit={(evt) => {handleSubmit(evt)}} className="w-full send-message flex gap-2">
+          <form onSubmit={(evt) => {handleSubmit(evt)}} className="w-full send-message flex gap-2">
             <input
               className="w-full border border-gray-400 outline-none rounded-md px-2 py-1"
               type="text"
